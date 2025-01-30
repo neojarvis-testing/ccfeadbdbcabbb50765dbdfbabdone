@@ -9,14 +9,14 @@ class TestMain(unittest.TestCase):
         self.FILENAME = 'hotels.json'
 
     @patch('builtins.input', side_effect=["1", "123", "Metro", "Test Location", "4.5", "6"])
-    def test_week1_day3_add_hotel(self, mock_input):
+    def test_week2_day2_add_hotel(self, mock_input):
         main()
         with open(self.FILENAME, 'r') as file:
             hotels = json.load(file)
             self.assertTrue({'ID': 123, 'name': "Metro", 'location': "Test Location", 'rating': 4.5} in hotels)
 
     @patch('builtins.input', side_effect=["2", "123", "6"])
-    def week1_day5_delete_hotel(self, mock_input):
+    def test_week2_day3_delete_hotel(self, mock_input):
         with open(self.FILENAME, 'w') as file:
             json.dump([{'ID': 123, 'name': "Metro", 'location': "Test Location", 'rating': 4.5}], file)
         main()
@@ -25,7 +25,7 @@ class TestMain(unittest.TestCase):
             self.assertEqual(len(hotels), 0)
 
     @patch('builtins.input', side_effect=["3", "123", "4.7", "6"])
-    def week2_day1_update_rating(self, mock_input):
+    def test_week2_day5_update_rating(self, mock_input):
         with open(self.FILENAME, 'w') as file:
             json.dump([{'ID': 123, 'name': "Metro", 'location': "Test Location", 'rating': 4.5}], file)
         main()
@@ -34,7 +34,7 @@ class TestMain(unittest.TestCase):
             self.assertTrue({'ID': 123, 'name': "Metro", 'location': "Test Location", 'rating': 4.7} in hotels)
 
     @patch('builtins.input', side_effect=["4", "6"])
-    def week1_day5_view_hotel(self, mock_input):
+    def test_week2_day3_view_hotel(self, mock_input):
         captured_output = StringIO()
         import sys
         sys.stdout = captured_output
@@ -49,7 +49,7 @@ class TestMain(unittest.TestCase):
         self.assertIn("4.5", printed_output)
 
     @patch('builtins.input', side_effect=["5", "123", "6"])
-    def week2_day1_search_hotel(self, mock_input):
+    def test_week2_day5_search_hotel(self, mock_input):
         captured_output = StringIO()
         import sys
         sys.stdout = captured_output
@@ -64,7 +64,7 @@ class TestMain(unittest.TestCase):
         self.assertIn("4.5", printed_output)
 
     @patch('builtins.input', side_effect=["invalid_choice", "6"])
-    def week1_day3_invalid_choice_integration(self, mock_input):
+    def test_week2_day2_invalid_choice_integration(self, mock_input):
         captured_output = StringIO()
         import sys
         sys.stdout = captured_output
